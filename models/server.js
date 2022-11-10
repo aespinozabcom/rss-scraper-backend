@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const { dbConnection } = require("../database/config");
+const apiRoutes = require("../routes/apiRoutes");
 
 class Server {
   constructor() {
@@ -10,7 +11,7 @@ class Server {
     this.port = process.env.PORT;
 
     this.path = {
-      pais: "/api/prueba",
+      api: "/api/api",
     };
 
     this.dbConnect();
@@ -39,7 +40,7 @@ class Server {
   }
 
   rutas() {
-    // this.app.use(this.path.pais, paisRoutes);
+    this.app.use(this.path.api, apiRoutes);
   }
 
   proxy() {
