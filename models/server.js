@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const { dbConnection } = require("../database/config");
 
 class Server {
   constructor() {
@@ -34,12 +35,7 @@ class Server {
   }
 
   async dbConnect() {
-    // try {
-    //   await sequelize.authenticate();
-    //   console.log("Base de datos en linea");
-    // } catch (error) {
-    //   console.warn("Error en la base de datos: ", error);
-    // }
+    await dbConnection();
   }
 
   rutas() {
