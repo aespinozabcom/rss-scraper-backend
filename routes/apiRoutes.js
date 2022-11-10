@@ -1,15 +1,5 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-// const {
-//   buscarRolXId,
-//   listarRoles,
-//   crearRol,
-//   editarRol,
-//   desactivarRol,
-// } = require("../controllers/rolController");
-// const { validarRolExiste } = require("../helpers/db-validators");
-// const { validarCampos } = require("../middlewares/validar-campos");
-// const { validarUsuario, validarAdmin } = require("../middlewares/validar-jwt");
 
 const router = Router();
 

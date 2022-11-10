@@ -9,6 +9,11 @@ const feedMedioSchema = Schema({
     type: String,
     required: [true, "La url del feed medio obligatoria"],
   },
+  estado: {
+    type: Boolean,
+    required: [true],
+    default: true,
+  },
 });
 
 module.exports = model("FeedMedio", feedMedioSchema);

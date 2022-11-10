@@ -9,6 +9,11 @@ const apiSchema = Schema({
     type: String,
     required: [true, "La url de la api es obligatoria"],
   },
+  estado: {
+    type: Boolean,
+    required: [true],
+    default: true,
+  },
 });
 
 module.exports = model("Api", apiSchema);

@@ -20,6 +20,11 @@ const noticiaSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: "FeedMedio",
   },
+  estado: {
+    type: Boolean,
+    required: [true],
+    default: true,
+  },
 });
 
 module.exports = model("FeedMedio", noticiaSchema);
