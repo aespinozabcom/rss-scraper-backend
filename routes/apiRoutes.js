@@ -1,44 +1,77 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
+const {
+  listarApiController,
+  buscarApiController,
+  crearApi,
+  editarApi,
+  desactivarApi,
+  activarApi,
+} = require("../controllers/apiController");
+const { existeApi } = require("../helpers/db-validators");
+const { validarApiDuplicado } = require("../middlewares/validarApi");
 
 const router = Router();
 
 //Listar roles
-router.get("/", (req, res) => {
-  res.status(200).json({
-    msg: `Funca`,
-  });
-});
+router.get("/", listarApiController);
 
 //Buscar rol x Id
-router.get("/:id", [
-  //   validarUsuario,
-  check("id", "El id es obligatorio").isMongoId(),
-  //   check("id").custom(validarRolExiste),
-  //   validarCampos,
-]);
+router.get(
+  "/:id",
+  [
+    check("id", "La id es obligatoria").not().isEmpty(),
+    check("id", "El id es obligatorio").isMongoId(),
+  ],
+  buscarApiController
+);
 
 //Crear rol
-router.post("/", [
-  //   validarAdmin,
-  check("rol", "El rol es obligatorio").not().isEmpty(),
-]);
+router.post(
+  "/",
+  [
+    check("descripcion", "La descripcion es obligatoria").not().isEmpty(),
+    check("descripcion", "La descripcion debe ser un string").isString(),
+    check("url", "La url es obligatoria").not().isEmpty(),
+    check("url", "La url debe ser un string").isURL(),
+    validarApiDuplicado,
+  ],
+  crearApi
+);
 
 //Editar rol
-router.put("/:id", [
-  //   validarAdmin,
-  check("id", "El id es obligatorio").isMongoId(),
-  //   check("id").custom(validarRolExiste),
-  check("rol", "El rol es obligatorio").not().isEmpty(),
-  //   validarCampos,
-]);
+router.put(
+  "/:id",
+  [
+    check("id", "La id es obligatoria").not().isEmpty(),
+    check("id", "El id es obligatorio").isMongoId(),
+    check("descripcion", "La descripcion es obligatoria").not().isEmpty(),
+    check("descripcion", "La descripcion debe ser un string").isString(),
+    check("url", "La url es obligatoria").not().isEmpty(),
+    check("url", "La url debe ser un string").isURL(),
+  ],
+  editarApi
+);
 
 //Desactivar rol
-router.delete("/:id", [
-  //   validarAdmin,
-  check("id", "El id es obligatorio").isMongoId(),
-  //   check("id").custom(validarRolExiste),
-  //   validarCampos,
-]);
+router.delete(
+  "/:id",
+  [
+    check("id", "La id es obligatoria").not().isEmpty(),
+    check("id", "El id es obligatorio").isMongoId(),
+    check("id").custom(existeApi),
+  ],
+  desactivarApi
+);
+
+router.get(
+  "/activar/:id",
+  [
+    check("id", "La id es obligatoria").not().isEmpty(),
+    check("id", "El id es obligatorio").isMongoId(),
+    check("id").custom(existeApi),
+  ],
+  activarApi
+);
 
 module.exports = router;
