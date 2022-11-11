@@ -3,6 +3,7 @@ const cors = require("cors");
 const path = require("path");
 const { dbConnection } = require("../database/config");
 const apiRoutes = require("../routes/apiRoutes");
+const feedMedioRoutes = require("../routes/feedMedioRoutes");
 
 class Server {
   constructor() {
@@ -12,6 +13,7 @@ class Server {
 
     this.path = {
       api: "/api/api",
+      feedMedio: "/api/feed-medio",
     };
 
     this.dbConnect();
@@ -41,6 +43,7 @@ class Server {
 
   rutas() {
     this.app.use(this.path.api, apiRoutes);
+    this.app.use(this.path.feedMedio, feedMedioRoutes);
   }
 
   proxy() {
