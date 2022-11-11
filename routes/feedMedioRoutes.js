@@ -34,7 +34,6 @@ router.post(
     check("descripcion", "La descripcion debe ser un string").isString(),
     check("url", "La url es obligatoria").not().isEmpty(),
     check("url", "La url debe ser un string").isURL(),
-    // check("urlFeedly", "La url es obligatoria").not().isEmpty(),
     validarUrlFeed,
     validarFeedMedioUnico,
   ],
@@ -44,15 +43,11 @@ router.post(
 router.put(
   "/:id",
   [
-    check("id", "La id es obligatoria").not().isEmpty(),
-    check("id", "El id es obligatorio").isMongoId(),
-    check("id").custom(existeFeedMedio),
     check("descripcion", "La descripcion es obligatoria").not().isEmpty(),
     check("descripcion", "La descripcion debe ser un string").isString(),
     check("url", "La url es obligatoria").not().isEmpty(),
     check("url", "La url debe ser un string").isURL(),
-    check("urlFeedly", "La url es obligatoria").not().isEmpty(),
-    validarFeedMedioUnico,
+    validarUrlFeed,
   ],
   editarFeedMedio
 );
