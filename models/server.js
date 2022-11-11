@@ -4,6 +4,7 @@ const path = require("path");
 const { dbConnection } = require("../database/config");
 const apiRoutes = require("../routes/apiRoutes");
 const feedMedioRoutes = require("../routes/feedMedioRoutes");
+const noticiaRoutes = require("../routes/noticiaRoutes");
 
 class Server {
   constructor() {
@@ -14,6 +15,7 @@ class Server {
     this.path = {
       api: "/api/api",
       feedMedio: "/api/feed-medio",
+      noticia: "/api/noticia",
     };
 
     this.dbConnect();
@@ -44,6 +46,7 @@ class Server {
   rutas() {
     this.app.use(this.path.api, apiRoutes);
     this.app.use(this.path.feedMedio, feedMedioRoutes);
+    this.app.use(this.path.noticia, noticiaRoutes);
   }
 
   proxy() {
