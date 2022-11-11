@@ -2,20 +2,9 @@ const { Schema, model } = require("mongoose");
 
 const noticiaSchema = Schema(
   {
-    titulo: {
-      type: String,
-    },
-    content: {
-      type: String,
-    },
-    summary: {
-      type: String,
-    },
-    fecha: {
-      type: Date,
-    },
-    url: {
-      type: String,
+    api: {
+      type: Schema.Types.ObjectId,
+      ref: "Api",
     },
     feedMedio: {
       type: Schema.Types.ObjectId,
@@ -30,4 +19,4 @@ const noticiaSchema = Schema(
   { strict: false }
 );
 
-module.exports = model("FeedMedio", noticiaSchema);
+module.exports = model("Noticia", noticiaSchema);
