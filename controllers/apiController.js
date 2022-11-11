@@ -9,7 +9,7 @@ const listarApiController = async (req, res) => {
 const buscarApiController = async (req, res) => {
   const { id } = req.params;
 
-  const api = await Api.findById(id, { estado: true });
+  const api = await Api.findOne({ _id: id, estado: true });
 
   res.status(200).json(api);
 };

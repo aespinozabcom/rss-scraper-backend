@@ -9,7 +9,7 @@ const listarFeedMedioController = async (req, res) => {
 const buscarFeedMedioXid = async (req, res) => {
   const { id } = req.params;
 
-  const feedMedio = await FeedMedio.findById(id, { estado: true });
+  const feedMedio = await FeedMedio.findOne({ _id: id, estado: true });
 
   res.status(200).json(feedMedio);
 };
