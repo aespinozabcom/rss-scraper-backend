@@ -7,6 +7,7 @@ const {
   desactivarNoticia,
   activarNoticia,
 } = require("../controllers/noticiaController");
+const { existeNoticia } = require("../helpers/db-validators");
 
 const router = Router();
 
@@ -37,7 +38,7 @@ router.delete(
   [
     check("id", "La id es obligatoria").not().isEmpty(),
     check("id", "El id es obligatorio").isMongoId(),
-    // check("id").custom(existeFeedMedio),
+    check("id").custom(existeNoticia),
   ],
   desactivarNoticia
 );
@@ -47,10 +48,9 @@ router.get(
   [
     check("id", "La id es obligatoria").not().isEmpty(),
     check("id", "El id es obligatorio").isMongoId(),
-    // check("id").custom(existeFeedMedio),
+    check("id").custom(existeNoticia),
   ],
   activarNoticia
-  //   activarFeedMedio
 );
 
 module.exports = router;
