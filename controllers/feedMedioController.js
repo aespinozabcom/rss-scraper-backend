@@ -6,75 +6,76 @@ const listarFeedMedioController = async (req, res) => {
   res.status(200).json(feedMedios);
 };
 
-const buscarApiController = async (req, res) => {
+const buscarFeedMedioXid = async (req, res) => {
   const { id } = req.params;
 
-  const api = await FeedMedio.findById(id, { estado: true });
+  const feedMedio = await FeedMedio.findById(id, { estado: true });
 
-  res.status(200).json(api);
+  res.status(200).json(feedMedio);
 };
 
-const crearApi = async (req, res) => {
-  const { descripcion, url } = req.body;
+const crearFeedMedio = async (req, res) => {
+  const { descripcion, url, urlFeedly } = req.body;
 
-  const api = await new FeedMedio({
+  const feedMedio = await new FeedMedio({
     descripcion: descripcion.toUpperCase(),
     url,
+    urlFeedly,
   });
 
-  await api.save();
+  await feedMedio.save();
 
-  res.status(200).json(api);
+  res.status(200).json(feedMedio);
 };
 
-const editarApi = async (req, res) => {
+const editarFeedMedio = async (req, res) => {
   const { id } = req.params;
-  const { descripcion, url } = req.body;
+  const { descripcion, url, urlFeedly } = req.body;
 
-  const api = await FeedMedio.findByIdAndUpdate(
+  const feedMedio = await FeedMedio.findByIdAndUpdate(
     id,
-    { descripcion: descripcion.toUpperCase(), url },
+    { descripcion: descripcion.toUpperCase(), url, urlFeedly },
     { new: true }
   );
 
-  await api.save();
+  await feedMedio.save();
 
-  res.status(201).json(api);
+  res.status(201).json(feedMedio);
 };
 
-const desactivarApi = async (req, res) => {
+const desactivarFeedMedio = async (req, res) => {
   const { id } = req.params;
 
-  const api = await FeedMedio.findByIdAndUpdate(
+  const feedMedio = await FeedMedio.findByIdAndUpdate(
     id,
     { estado: false },
     { new: true }
   );
 
-  await api.save();
+  await feedMedio.save();
 
-  res.status(201).json(api);
+  res.status(201).json(feedMedio);
 };
 
-const activarApi = async (req, res) => {
+const activarFeedMedio = async (req, res) => {
   const { id } = req.params;
 
-  const api = await FeedMedio.findByIdAndUpdate(
+  const feedMedio = await FeedMedio.findByIdAndUpdate(
     id,
     { estado: true },
     { new: true }
   );
 
-  await api.save();
+  await feedMedio.save();
 
-  res.status(201).json(api);
+  res.status(201).json(feedMedio);
 };
 
 module.exports = {
   listarFeedMedioController,
-  buscarApiController,
-  crearApi,
-  editarApi,
-  desactivarApi,
-  activarApi,
+  buscarFeedMedioXid,
+  crearFeedMedio,
+  editarFeedMedio,
+  desactivarFeedMedio,
+  activarFeedMedio,
 };
