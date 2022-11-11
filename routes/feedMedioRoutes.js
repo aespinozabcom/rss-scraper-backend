@@ -6,10 +6,8 @@ const {
 
 const router = Router();
 
-//Listar roles
 router.get("/", listarFeedMedioController);
 
-//Buscar rol x Id
 router.get(
   "/:id",
   [
@@ -19,7 +17,6 @@ router.get(
   //   buscarApiController
 );
 
-//Crear rol
 router.post(
   "/",
   [
@@ -32,7 +29,6 @@ router.post(
   //   crearApi
 );
 
-//Editar rol
 router.put(
   "/:id",
   [
@@ -46,7 +42,6 @@ router.put(
   //   editarApi
 );
 
-//Desactivar rol
 router.delete(
   "/:id",
   [
