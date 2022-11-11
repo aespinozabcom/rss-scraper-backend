@@ -9,6 +9,9 @@ const feedMedioSchema = Schema({
     type: String,
     required: [true, "La url del feed medio obligatoria"],
   },
+  urlFeed: {
+    type: String,
+  },
   estado: {
     type: Boolean,
     required: [true],
