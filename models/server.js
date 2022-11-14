@@ -59,9 +59,13 @@ class Server {
   }
 
   scraping() {
-    setInterval(() => {
-      scrapearRss(process.env.ID_API);
-    }, 45000);
+    try {
+      setInterval(() => {
+        scrapearRss(process.env.ID_API);
+      }, 120000);
+    } catch (error) {
+      console.warn(error);
+    }
   }
 }
 
