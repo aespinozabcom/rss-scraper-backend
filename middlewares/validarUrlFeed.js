@@ -18,9 +18,11 @@ const validarUrlFeed = async (req, res, next) => {
 
     if (
       !isValidUrl(
-        decodeURIComponent(urlFeedly)
-          .replace("feed/", "")
-          .replace("http", "https")
+        urlFeedly.includes("https")
+          ? decodeURIComponent(urlFeedly).replace("feed/", "")
+          : decodeURIComponent(urlFeedly)
+              .replace("feed/", "")
+              .replace("http", "https")
       )
     ) {
       return res.status(400).json({

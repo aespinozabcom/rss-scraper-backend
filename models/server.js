@@ -5,6 +5,7 @@ const { dbConnection } = require("../database/config");
 const apiRoutes = require("../routes/apiRoutes");
 const feedMedioRoutes = require("../routes/feedMedioRoutes");
 const noticiaRoutes = require("../routes/noticiaRoutes");
+const { scrapearRss } = require("../helpers/scrapRss");
 
 class Server {
   constructor() {
@@ -25,6 +26,8 @@ class Server {
     this.rutas();
 
     this.proxy();
+
+    this.scraping();
   }
 
   middlewares() {
@@ -53,6 +56,12 @@ class Server {
     this.app.all("*", (req, res) => {
       res.sendFile(path.join(__dirname, "../public/index.html"));
     });
+  }
+
+  scraping() {
+    setInterval(() => {
+      scrapearRss(process.env.ID_API);
+    }, 45000);
   }
 }
 
