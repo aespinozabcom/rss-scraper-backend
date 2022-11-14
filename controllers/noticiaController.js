@@ -1,7 +1,9 @@
 const Noticia = require("../models/Noticia");
 
 const listarNoticia = async (req, res) => {
-  const noticias = await Noticia.find({ estado: true });
+  const noticias = await Noticia.find({ estado: true }).sort([
+    ["date_published", -1],
+  ]);
 
   res.status(200).json(noticias);
 };
@@ -10,6 +12,16 @@ const buscarNoticiaXId = async (req, res) => {
   const { id } = req.params;
 
   const noticia = await Noticia.findOne({ _id: id, estado: true });
+
+  res.status(200).json(noticia);
+};
+
+const buscarNoticiaXFeed = async (req, res) => {
+  const { id } = req.params;
+
+  const noticia = await Noticia.find({ feedMedio: id, estado: true }).sort([
+    ["date_published", -1],
+  ]);
 
   res.status(200).json(noticia);
 };
@@ -60,6 +72,7 @@ const activarNoticia = async (req, res) => {
 module.exports = {
   listarNoticia,
   buscarNoticiaXId,
+  buscarNoticiaXFeed,
   editarNoticia,
   desactivarNoticia,
   activarNoticia,

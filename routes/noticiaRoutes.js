@@ -6,8 +6,9 @@ const {
   editarNoticia,
   desactivarNoticia,
   activarNoticia,
+  buscarNoticiaXFeed,
 } = require("../controllers/noticiaController");
-const { existeNoticia } = require("../helpers/db-validators");
+const { existeNoticia, existeFeedMedio } = require("../helpers/db-validators");
 
 const router = Router();
 
@@ -20,6 +21,16 @@ router.get(
     check("id", "El id es obligatorio").isMongoId(),
   ],
   buscarNoticiaXId
+);
+
+router.get(
+  "/feed/:id",
+  [
+    check("id", "La id es obligatoria").not().isEmpty(),
+    check("id", "El id es obligatorio").isMongoId(),
+    check("id").custom(existeFeedMedio),
+  ],
+  buscarNoticiaXFeed
 );
 
 router.put(
