@@ -28,11 +28,11 @@ const buscarNoticiaXFeed = async (req, res) => {
 
 const editarNoticia = async (req, res) => {
   const { id } = req.params;
-  const { feedMedio, api } = req.body;
+  const { title, content_html, summary, date_published } = req.body;
 
   const noticia = await Noticia.findByIdAndUpdate(
     id,
-    { feedMedio, api },
+    { title, content_html, summary, date_published },
     { new: true }
   );
 

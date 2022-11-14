@@ -36,10 +36,17 @@ router.get(
 router.put(
   "/:id",
   [
-    check("feedMedio", "El feed medio es obligatorio").not().isEmpty(),
-    check("feedMedio", "El feed medio debe ser un mongo id").isMongoId(),
-    check("api", "La api es obligatoria").not().isEmpty(),
-    check("api", "La api debe ser un mongo id").isMongoId(),
+    check("id", "El id es obligatorio").not().isEmpty(),
+    check("id", "El id debe ser un mongo id").isMongoId(),
+    check("id").custom(existeNoticia),
+    check("title", "El title es obligatorio").not().isEmpty(),
+    check("title", "El title debe ser un string").isString(),
+    check("content_html", "El content_html es obligatorio").not().isEmpty(),
+    check("content_html", "El content_html debe ser un string").isString(),
+    check("summary", "El summary es obligatorio").not().isEmpty(),
+    check("summary", "El summary debe ser un string").isString(),
+    check("date_published", "El date_published es obligatorio").not().isEmpty(),
+    check("date_published", "El date_published debe ser un string").isDate(),
   ],
   editarNoticia
 );
