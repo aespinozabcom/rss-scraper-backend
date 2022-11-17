@@ -62,7 +62,7 @@ class Server {
     try {
       setInterval(() => {
         scrapearRss(process.env.ID_API);
-      }, 120000);
+      }, 60000);
     } catch (error) {
       console.warn(error);
     }

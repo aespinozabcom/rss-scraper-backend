@@ -26,14 +26,28 @@ const scrapearRss = async (idApi) => {
         (nt) => Date.parse(nt.date_published) > Date.parse(ultimaFecha)
       );
 
-      ultimasNoticias.forEach(async (ut) => {
-        const crearNot = await new Noticia({
-          ...ut,
-          feedMedio: feed._id,
-          api: idApi,
-        });
+      const noticiasLimpias = noticiasBD.map((nt) => {
+        return {
+          guid: nt.guid,
+          url: nt.url,
+          title: nt.title,
+          content_html: nt.content_html,
+          summary: nt.summary,
+          date_published: nt.date_published,
+          author: nt.author,
+        };
+      });
 
-        await crearNot.save();
+      ultimasNoticias.forEach(async (ut) => {
+        if (!noticiasLimpias.includes(ut)) {
+          const crearNot = await new Noticia({
+            ...ut,
+            feedMedio: feed._id,
+            api: idApi,
+          });
+
+          await crearNot.save();
+        }
       });
     } else {
       noticiasRss.data.items.forEach(async (nt) => {
