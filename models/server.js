@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const socketIo = require("socket.io");
+const http = require("http");
 const { dbConnection } = require("../database/config");
 const apiRoutes = require("../routes/apiRoutes");
 const feedMedioRoutes = require("../routes/feedMedioRoutes");
@@ -27,6 +29,24 @@ class Server {
 
     this.proxy();
 
+    this.server = http.createServer(this.app);
+
+    this.io = socketIo(this.server, {
+      cors: "*",
+    });
+
+    this.io.on("connection", (socket) => {
+      console.log("client connected: ", socket.id);
+
+      socket.emit("noticia", "hola");
+
+      // socket.join("clock-room");
+      // socket.emit("connection", null);
+      // socket.on("disconnect", (reason) => {
+      //   console.log(reason);
+      // });
+    });
+
     this.scraping();
   }
 
@@ -37,7 +57,7 @@ class Server {
   }
 
   listen() {
-    this.app.listen(this.port, () => {
+    this.server.listen(this.port, () => {
       console.log("Servidor iniciado en el puerto " + this.port);
     });
   }
@@ -61,7 +81,7 @@ class Server {
   scraping() {
     try {
       setInterval(() => {
-        scrapearRss(process.env.ID_API);
+        scrapearRss(process.env.ID_API, this.io);
       }, 60000);
     } catch (error) {
       console.warn(error);
